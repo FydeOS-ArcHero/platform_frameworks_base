@@ -225,6 +225,7 @@ static void EnableKeepCapabilities(JNIEnv* env) {
 }
 
 static void DropCapabilitiesBoundingSet(JNIEnv* env) {
+#if 0
   for (int i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {
     int rc = prctl(PR_CAPBSET_DROP, i, 0, 0, 0);
     if (rc == -1) {
@@ -236,9 +237,11 @@ static void DropCapabilitiesBoundingSet(JNIEnv* env) {
       }
     }
   }
+#endif
 }
 
 static void SetCapabilities(JNIEnv* env, int64_t permitted, int64_t effective) {
+#if 0
   __user_cap_header_struct capheader;
   memset(&capheader, 0, sizeof(capheader));
   capheader.version = _LINUX_CAPABILITY_VERSION_3;
@@ -255,6 +258,7 @@ static void SetCapabilities(JNIEnv* env, int64_t permitted, int64_t effective) {
     ALOGE("capset(%" PRId64 ", %" PRId64 ") failed", permitted, effective);
     RuntimeAbort(env, __LINE__, "capset failed");
   }
+#endif
 }
 
 static void SetSchedulerPolicy(JNIEnv* env) {
